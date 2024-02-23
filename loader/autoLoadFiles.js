@@ -8,6 +8,7 @@ module.exports = function (content, map, meta) {
   let template = ''
   if (this.resourcePath.indexOf(srcDir) > -1) {
     const matchs = /entry[\\|\/](\S*).js/.exec(this.resourcePath)
+    if (!matchs) return content
     const key = matchs[1]
     const ejs = path.join(srcDir, 'view/') + key + '.ejs'
     const scss = path.join(srcDir, 'sass/') + key + '.scss'
