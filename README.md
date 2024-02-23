@@ -60,7 +60,6 @@
      ```
      使用公共的组件模块的语法
      <%= require('./header.ejs')() %>
-     <%= require('./header.ejs')({ name: '欢迎来到xxx' }) %> // 传递值时
      
      使用代码逻辑块
          错误示范
@@ -142,3 +141,14 @@ export default {
 </html>
 ```
 
+#### 作者
+
+​	380012546@qq.com
+
+* github https://github.com/j3812549
+
+* 知乎 https://www.zhihu.com/people/tiancai9
+* csdn https://blog.csdn.net/qq_42018777?type=blog
+
+* 掘金 https://juejin.cn/user/2559318800214520
+* npm https://www.npmjs.com/~j3812549
