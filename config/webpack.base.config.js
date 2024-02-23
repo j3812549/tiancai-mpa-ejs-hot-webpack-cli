@@ -7,7 +7,8 @@ const ResolveEjsPlugin = require('../plugins/resolveEjsPlugin.js')
 const srcDir = path.join(__dirname, '../src')
 let plugins = [
   new webpack.DefinePlugin({
-    'process.env': '"production"'
+    'process.env.MODE_ENV': `'"${process.env.MODE_ENV}"'`,
+    'process.env.NODE_ENV': `'"${process.env.MODE_ENV}"'`
   }),
   new webpack.optimize.ModuleConcatenationPlugin()
 ]

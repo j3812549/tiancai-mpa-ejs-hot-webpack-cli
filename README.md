@@ -1,4 +1,4 @@
-  # tiancai-mpa-ejs-hot-webpack-cli
+****  # tiancai-mpa-ejs-hot-webpack-cli
 
    #### 概述：带热更新的多页面可模块化的脚手架工具、请求同时支持SEO和AJax、支持SCSS编写
 
@@ -129,6 +129,14 @@ module.exports = {
   build_ext: '.ejs', // 需要打包成html改为html,但是需要一些额外处理，请自己结合实际情况来调试
   publicModules: ['@/assets/common.js', '@/assets/common.scss'] // 配置公共模块
 }
+```
+
+#### 环境变量
+通过process.env.MODE_ENV或者process.env.NODE_ENV获取不同的环境变量
+```
+// development and production
+console.log('process.env.MODE_ENV', process.env.MODE_ENV)
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 ```
 
 #### 自定义模板
