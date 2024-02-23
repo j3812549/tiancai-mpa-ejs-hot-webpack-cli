@@ -9,4 +9,7 @@ export default {
   index: {
     title: 'xxx'
   },
+  b: {
+    name: '我是服务端渲染的数据'
+  }
 }

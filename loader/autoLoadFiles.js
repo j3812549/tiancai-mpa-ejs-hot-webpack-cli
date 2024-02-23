@@ -12,8 +12,7 @@ module.exports = function (content, map, meta) {
     const ejs = path.join(srcDir, 'view/') + key + '.ejs'
     const scss = path.join(srcDir, 'sass/') + key + '.scss'
     if (!fs.existsSync(scss)) fs.writeFileSync(scss, '')
-    if (!fs.existsSync(ejs)) fs.writeFileSync(ejs, createEjsTemplate(key
-    ))
+    if (!fs.existsSync(ejs)) fs.writeFileSync(ejs, createEjsTemplate(key))
     template += `import '@/sass/${key}.scss';`
     template += `import '@/view/${key}.ejs';`
 
@@ -40,6 +39,12 @@ module.exports = function (content, map, meta) {
 
 
 function createEjsTemplate(key = '') {
+  const filename = `../ejs-template.ejs`
+  if (fs.existsSync(path.resolve(__dirname, filename))) {
+    const template = fs.readFileSync(path.join(__dirname, filename), 'utf-8')
+    return template
+  }
+
   return `<!DOCTYPE html>
   <html lang="en">
   
@@ -47,7 +52,7 @@ function createEjsTemplate(key = '') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>tiancai-mpa-ejs-hot-webpack-cli</title>
   </head>
   
   <body>

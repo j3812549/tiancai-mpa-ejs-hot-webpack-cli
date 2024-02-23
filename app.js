@@ -27,7 +27,7 @@ const createServer = () => {
       console.log(
         chalk.bold(chalk.green(`Loopback: ${chalk.blue(`http://localhost:${port}/`)}`))
       )
-    }, 500)
+    }, 1000)
   })
 }
 

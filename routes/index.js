@@ -13,7 +13,7 @@ const distDir = path.join(__dirname, '../dist/')
 
 const getSource = async (key) => {
   const filename = `../src/register_data.js`
-  if (!fs.existsSync(filename)) return {}
+  if (!fs.existsSync(path.join(__dirname, filename))) return {}
   const sources = require(filename).default
   let data = {}
   if (typeof sources[key] === 'function') {
@@ -48,6 +48,7 @@ const resolvePath = async (req, res) => {
         res.redirect(server_url)
       }
     } catch (err) {
+      console.error(err)
       res.send(err)
     }
   } else {
