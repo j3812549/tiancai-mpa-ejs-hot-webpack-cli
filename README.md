@@ -121,6 +121,16 @@ export default {
 ...
 ````
 
+#### 配置项
+```
+// config/index.js
+module.exports = {
+  port: 3501, // 服务启动的端口
+  build_ext: '.ejs', // 需要打包成html改为html,但是需要一些额外处理，请自己结合实际情况来调试
+  publicModules: ['@/assets/common.js', '@/assets/common.scss'] // 配置公共模块
+}
+```
+
 #### 自定义模板
 
 在根目录创建ejs-template.ejs，在src/entry创建js,会根据此模板生成ejs
