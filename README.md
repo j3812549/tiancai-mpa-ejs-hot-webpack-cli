@@ -132,11 +132,10 @@ module.exports = {
 ```
 
 #### 环境变量
-通过process.env.MODE_ENV或者process.env.NODE_ENV获取不同的环境变量
+通过process.env.MODE_ENV获取不同的环境变量
 ```
 // development and production
 console.log('process.env.MODE_ENV', process.env.MODE_ENV)
-console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 ```
 
 #### 自定义模板
