@@ -1,4 +1,4 @@
-1. # tiancai-mpa-ejs-hot-webpack-cli
+  # tiancai-mpa-ejs-hot-webpack-cli
 
    #### 概述：带热更新的多页面可模块化的脚手架工具、请求同时支持SEO和AJax、支持SCSS编写
 

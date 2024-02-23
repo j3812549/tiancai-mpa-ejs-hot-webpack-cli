@@ -48,7 +48,9 @@ const resolvePath = async (req, res) => {
         res.redirect(server_url)
       }
     } catch (err) {
-      console.error(err)
+      if (err.code !== 'ERR_BAD_REQUEST') {
+        console.error(err)
+      }
       res.send(err)
     }
   } else {
