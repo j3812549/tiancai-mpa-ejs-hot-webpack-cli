@@ -1,7 +1,7 @@
 const path = require('path')
-const he = require('he')
 const fs = require('fs')
 const env = process.env.MODE_ENV || 'production'
+const config = require('../config/index')
 
 module.exports = function (content, map, meta) {
   const srcDir = path.join(__dirname, '../src')
@@ -16,6 +16,10 @@ module.exports = function (content, map, meta) {
     if (!fs.existsSync(ejs)) fs.writeFileSync(ejs, createEjsTemplate(key))
     template += `import '@/sass/${key}.scss';`
     template += `import '@/view/${key}.ejs';`
+
+    config.publicModules && config.publicModules.forEach(v => {
+      template += `import '${v}';`
+    })
 
     const autoLoadFiles = temp => {
       temp.replace(/require\(\'\.(.+)\'\)\(\)/, (a, b) => {
