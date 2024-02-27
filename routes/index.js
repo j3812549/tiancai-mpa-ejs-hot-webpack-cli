@@ -11,13 +11,13 @@ const isDev = process.env.MODE_ENV === 'development'
 const pages = fs.readdirSync(path.join(__dirname, '../src/entry'), 'utf-8').map(v => v.replace(/.js/g, ''))
 const distDir = path.join(__dirname, '../dist/')
 
-const getSource = async (key) => {
+const getSource = async (key, opt) => {
   const filename = `../src/register_data.js`
   if (!fs.existsSync(path.join(__dirname, filename))) return {}
   const sources = require(filename).default
   let data = {}
   if (typeof sources[key] === 'function') {
-    data = await sources[key]()
+    data = await sources[key](opt)
   } else if (typeof sources[key] === 'object') {
     data = sources[key]
   }
@@ -26,17 +26,27 @@ const getSource = async (key) => {
 
 const resolvePath = async (req, res) => {
   let { url, path } = req
-  const key = pages.find(v => v === path.replace(/\//i, ''))
+  const key = pages.find(v => v === path.replace(/\//i, '').replace(/\/\d+/g, ''))
   if (isDev) {
-    let server_url = `http://localhost:8080${url}`
+    let server_url = `http://localhost:8080${url.replace(/\/\d+/g, '')}`
     try {
       if (key || path === '/') {
         if (path !== '/') server_url = server_url + '.html'
         const result = await axios.get(server_url)
-        const template = result.data.replace(/{{/g, '<%=').replace(/}}/g, '%>').replace(/\[\[/g, '<%').replace(/\]\]/g, '%>')
+        let template = result.data.replace(/{{/g, '<%=').replace(/}}/g, '%>').replace(/\[\[/g, '<%').replace(/\]\]/g, '%>')
+        template = he.decode(template)
+        template = template.replace(/href=['"](.+)['"]\s/g, (o, v) => {
+          return `href="http://localhost:${config.port}${v}"`
+        })
 
-        const source = await getSource(key || 'index')
-        const data = ejs.render(he.decode(template), source)
+        const id = url.match(/\d+/)
+        let source
+        if (id) {
+          source = await getSource(key || 'index', { id: id[0] })
+        } else {
+          source = await getSource(key || 'index')
+        }
+        const data = ejs.render(template, source)
         res.send(data)
       } else {
         if (url.match(/\.js|.json$/)) {

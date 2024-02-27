@@ -158,6 +158,20 @@ console.log('process.env.MODE_ENV', process.env.MODE_ENV)
 </div>
 ```
 
+#### 动态路由
+```
+// 当type页面存在时, 会将:id识别为动态参数，并且丢到register_data.js作为参数处理
+<a href="/type/{{ item.id }}"  class="type-item">{{ item.name }}</a>
+
+```
+
+// register_data.js
+```
+  type: async (opt) => {
+    console.log('id', opt.id)
+  }
+```
+
 #### 自定义模板
 
 在根目录创建ejs-template.ejs，在src/entry创建js,会根据此模板生成ejs
