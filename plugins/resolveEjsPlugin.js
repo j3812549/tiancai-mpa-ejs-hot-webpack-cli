@@ -23,7 +23,22 @@ class ResolveEjsPlugin {
 
       ejs.forEach(v => {
         const filename = path.join(rootDir, `./src/view/`) + v + '.ejs'
-        let template = fs.readFileSync(filename, 'utf-8').replace(/require\((.+)\)\(\)/g, (o, v) => `include(${v.replace(config.build_ext, '')})`).replace(/%>/g, '-%>').replace(/<%=/g, '<%-')
+        let template = fs.readFileSync(filename, 'utf-8')
+        template = template.replace(/<%=\s*require\(['"](.+)['"]\).*%>/g, (o, v) => {
+          const filename = path.join(rootDir, `./src/view/`, v)
+          let temp = fs.readFileSync(filename, 'utf-8')
+
+          const key = v.replace(/(\.|ejs)/g, '')
+          const cssPath = './' + cssFiles.find(f => f.indexOf(key) > -1)
+          const jsPath = './' + jsFiles.find(f => f.indexOf(key) > -1)
+          const cssTemp = `<link href="${cssPath}" rel="stylesheet" />`
+          const jsTemp = `<script src="${jsPath}"></script>`
+          temp += cssTemp
+          temp += jsTemp
+          temp = temp.replace(o, temp)
+          return temp
+        })
+
         template = template.replace(/{{/g, '<%=').replace(/}}/g, '%>').replace(/\[\[/g, '<%').replace(/\]\]/g, '%>')
         if (pages.indexOf(v) > -1) {
           const cssPath = './' + cssFiles.find(f => f.indexOf(v) > -1)
