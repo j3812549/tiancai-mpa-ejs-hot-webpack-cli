@@ -12,6 +12,7 @@ module.exports = {
   mode: env,
   entry: Base.getEntry(env),
   output: {
+    publicPath: '/',
     path: distDir,
     filename: '[name].js',
     chunkFilename: '[name].js',

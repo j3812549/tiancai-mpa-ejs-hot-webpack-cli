@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const config = require('../config/index')
 
+const assetsPublicPath = config.assetsPublicPath
+
 class ResolveEjsPlugin {
   apply(compiler) {
     compiler.hooks.emit.tapAsync('ResolveEjsPlugin', (compilation, callback) => {
@@ -29,8 +31,8 @@ class ResolveEjsPlugin {
           let temp = fs.readFileSync(filename, 'utf-8')
 
           const key = v.replace(/(\.|ejs)/g, '')
-          const cssPath = './' + cssFiles.find(f => f.indexOf(key) > -1)
-          const jsPath = './' + jsFiles.find(f => f.indexOf(key) > -1)
+          const cssPath = assetsPublicPath + cssFiles.find(f => f.indexOf(key) > -1)
+          const jsPath = assetsPublicPath + jsFiles.find(f => f.indexOf(key) > -1)
           const cssTemp = `<link href="${cssPath}" rel="stylesheet" />`
           const jsTemp = `<script src="${jsPath}"></script>`
           temp += cssTemp
@@ -41,8 +43,8 @@ class ResolveEjsPlugin {
 
         template = template.replace(/{{/g, '<%=').replace(/}}/g, '%>').replace(/\[\[/g, '<%').replace(/\]\]/g, '%>')
         if (pages.indexOf(v) > -1) {
-          const cssPath = './' + cssFiles.find(f => f.indexOf(v) > -1)
-          const jsPath = './' + jsFiles.find(f => f.indexOf(v) > -1)
+          const cssPath = assetsPublicPath + cssFiles.find(f => f.indexOf(v) > -1)
+          const jsPath = assetsPublicPath + jsFiles.find(f => f.indexOf(v) > -1)
           const cssTemp = `<link href="${cssPath}" rel="stylesheet" />`
           const jsTemp = `<script src="${jsPath}"></script>`
           if (template.match(/<\/head>/)) {
