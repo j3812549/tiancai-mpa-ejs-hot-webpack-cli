@@ -138,6 +138,26 @@ module.exports = {
 console.log('process.env.MODE_ENV', process.env.MODE_ENV)
 ```
 
+#### 模块化引入变量丢失问题
+需按照此方法给组件载入变量
+
+```html
+  // index.ejs
+  <div>
+    [[ var video_list = item.list ]]
+    <%= require('./list.ejs')() %>
+  </div>
+```
+
+```html
+  // list.ejs
+<div class="video_list-box">
+  [[ video_list.forEach(function(item) { ]]
+  <div>item.src</div>
+  [[]]
+</div>
+```
+
 #### 自定义模板
 
 在根目录创建ejs-template.ejs，在src/entry创建js,会根据此模板生成ejs
