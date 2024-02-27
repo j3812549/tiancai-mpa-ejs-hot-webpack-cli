@@ -22,7 +22,7 @@ module.exports = function (content, map, meta) {
     })
 
     const autoLoadFiles = temp => {
-      temp.replace(/require\(\'\.(.+)\'\)\(\)/, (a, b) => {
+      temp.replace(/require\(\'\.(.+)\'\)\(\)/g, (a, b) => {
         const filename = path.join(srcDir, 'view/') + b.replace(/\//, '')
         template += `import '@/view/${b.replace(/\//g, '')}';`
         template += `import '@/entry/${b.replace(/\//g, '').replace(/ejs/, 'js')}';`
