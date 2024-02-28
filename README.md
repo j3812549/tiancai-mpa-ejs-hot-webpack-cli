@@ -193,6 +193,13 @@ console.log('process.env.MODE_ENV', process.env.MODE_ENV)
 </html>
 ```
 
+#### 已知问题
+1. 修改register_data.js不会触发热更新
+答：因为采用了两套热更新混用方案导致,采用nodemon监听除src目录下文件，因为register_data.js在src目录下不会触发nodemon的热更新,需要手动重新node服务。
+
+2. 关于新引入ejs模块样式丢失问题
+答：也需要手动重启node服务
+
 #### 作者
 
 ​	380012546@qq.com
