@@ -31,7 +31,7 @@ const resolvePath = async (req, res) => {
     let server_url = `http://localhost:8080${url.replace(/\/\d+/g, '')}`
     try {
       if (key || path === '/') {
-        if (path !== '/') server_url = server_url + '.html'
+        if (path !== '/') server_url = server_url.indexOf('?') > -1 ? server_url.replace('?', '.html?') : server_url + '.html'
         const result = await axios.get(server_url)
         let template = result.data.replace(/{{/g, '<%=').replace(/}}/g, '%>').replace(/\[\[/g, '<%').replace(/\]\]/g, '%>')
         template = he.decode(template)

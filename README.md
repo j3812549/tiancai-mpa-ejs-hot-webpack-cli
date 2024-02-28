@@ -173,6 +173,9 @@ console.log('process.env.MODE_ENV', process.env.MODE_ENV)
   }
 ```
 
+同理,URLPrams也可以通过opt取到
+
+
 #### 自定义模板
 
 在根目录创建ejs-template.ejs，在src/entry创建js,会根据此模板生成ejs
