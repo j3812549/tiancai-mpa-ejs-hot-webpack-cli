@@ -128,7 +128,7 @@ module.exports = {
   port: 3501, // 服务启动的端口
   build_ext: '.ejs', // 需要打包成html改为html,但是需要一些额外处理，请自己结合实际情况来调试
   publicModules: ['@/assets/common.js', '@/assets/common.scss'], // 配置公共模块
-  assetsPublicPath: '/' // 打包的路径配置
+  assetsPublicPath: '/' // 静态文件打包的路径配置
 }
 ```
 

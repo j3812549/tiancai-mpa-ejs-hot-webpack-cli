@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
-const env = process.env.MODE_ENV || 'production'
 const config = require('../config/index')
+const env = process.env.MODE_ENV || 'production'
 
 module.exports = function (content, map, meta) {
   const srcDir = path.join(__dirname, '../src')
@@ -9,6 +9,11 @@ module.exports = function (content, map, meta) {
   if (this.resourcePath.indexOf(srcDir) > -1) {
     const matchs = /entry[\\|\/](\S*).js/.exec(this.resourcePath)
     if (!matchs) return content
+
+    config.publicModules && config.publicModules.forEach(v => {
+      template += `import '${v}';`
+    })
+
     const key = matchs[1]
     const ejs = path.join(srcDir, 'view/') + key + '.ejs'
     const scss = path.join(srcDir, 'sass/') + key + '.scss'
@@ -16,10 +21,6 @@ module.exports = function (content, map, meta) {
     if (!fs.existsSync(ejs)) fs.writeFileSync(ejs, createEjsTemplate(key))
     template += `import '@/sass/${key}.scss';`
     template += `import '@/view/${key}.ejs';`
-
-    config.publicModules && config.publicModules.forEach(v => {
-      template += `import '${v}';`
-    })
 
     const autoLoadFiles = temp => {
       temp.replace(/require\(\'\.(.+)\'\)\(\)/g, (a, b) => {
@@ -34,10 +35,10 @@ module.exports = function (content, map, meta) {
     env === 'development' && autoLoadFiles(fs.readFileSync(ejs, 'utf-8'))
 
     template += content
+
   } else {
     template = content
   }
-
   return template
 }
 
