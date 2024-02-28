@@ -42,7 +42,7 @@ const resolvePath = async (req, res) => {
         const id = url.match(/\d+/)
         let source
         if (id) {
-          source = await getSource(key || 'index', { id: id[0] })
+          source = await getSource(key || 'index', Object.assign(_.cloneDeep(req.query), { id: id[0] }))
         } else {
           source = await getSource(key || 'index')
         }
@@ -64,7 +64,13 @@ const resolvePath = async (req, res) => {
       res.send(err)
     }
   } else {
-    const source = await getSource(key || 'index')
+    const id = url.match(/\d+/)
+    let source
+    if (id) {
+      source = await getSource(key || 'index', Object.assign(_.cloneDeep(req.query), { id: id[0] }))
+    } else {
+      source = await getSource(key || 'index')
+    }
     // const template = fs.readFileSync(distDir + (key || 'index') + config.build_ext, 'utf8')
     // const data = ejs.render(he.decode(template), source)
     // res.send(data)
