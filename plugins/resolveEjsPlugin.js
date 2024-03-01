@@ -59,6 +59,22 @@ class ResolveEjsPlugin {
           }
         }
         // template = template.replace(/[\r\n]/g, '')
+
+        const styles = template.match(/<link.+\/>/g) || []
+        const jss = template.match(/<script.+<\/script>/g) || []
+
+        template = template.replace(/<link.+\/>/g, '').replace(/<script.+<\/script>/g, '')
+
+        if (template.match(/<\/head>/)) {
+          template = template.replace(/<\/head>/, `${styles.join('')}</head>`)
+        } else {
+          template = template + styles.join('')
+        }
+        if (template.match(/<\/html>/)) {
+          template = template.replace(/<\/html>/, `${jss.join('')}</html>`)
+        } else {
+          template = template + jss.join('')
+        }
         fs.writeFileSync(path.join(distDir, '/') + v + config.build_ext, template, 'utf-8')
       })
 
