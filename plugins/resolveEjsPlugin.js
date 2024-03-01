@@ -58,7 +58,6 @@ class ResolveEjsPlugin {
             template = template + jsTemp
           }
         }
-        // template = template.replace(/[\r\n]/g, '')
 
         const styles = template.match(/<link.+\/>/g) || []
         const jss = template.match(/<script.+<\/script>/g) || []
@@ -75,6 +74,9 @@ class ResolveEjsPlugin {
         } else {
           template = template + jss.join('')
         }
+
+        template = template.replace(/[\r\n]/g, '')
+
         fs.writeFileSync(path.join(distDir, '/') + v + config.build_ext, template, 'utf-8')
       })
 
