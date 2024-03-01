@@ -79,7 +79,11 @@ const resolvePath = async (req, res) => {
 }
 
 router.use('/', async (req, res) => {
-  resolvePath(req, res)
+  try {
+    await resolvePath(req, res)
+  } catch (err) {
+    res.status(500).send('404 不存在的页面')
+  }
 })
 
 module.exports = router
