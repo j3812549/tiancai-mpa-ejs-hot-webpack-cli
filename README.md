@@ -203,6 +203,10 @@ console.log('process.env.MODE_ENV', process.env.MODE_ENV)
 2. 关于新引入ejs模块样式丢失问题
 答：也需要手动重启node服务
 
+3. Error: ENOENT: no such file or directory, open
+答：需要根目录下创建dist文件夹
+
+
 #### 作者
 
 ​	380012546@qq.com

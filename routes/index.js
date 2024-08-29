@@ -2,6 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const he = require('he')
 const path = require('path')
+const _ = require('lodash')
 const config = require('../config')
 
 const axios = require('axios')
@@ -46,6 +47,9 @@ const resolvePath = async (req, res) => {
         } else {
           source = await getSource(key || 'index')
         }
+        // console.log(template)
+        // console.log('source', source)
+        // template = template.replace(/<%= htmlWebpackPlugin.options.title %>/, source.title || key)
         const data = ejs.render(template, source)
         res.send(data)
       } else {
