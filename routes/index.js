@@ -53,13 +53,15 @@ const resolvePath = async (req, res) => {
         const data = ejs.render(template, source)
         res.send(data)
       } else {
+        let static_url = `http://localhost:8080${url}`
+
         if (url.match(/\.js|.json$/)) {
-          const result = await axios.get(server_url)
+          const result = await axios.get(static_url)
           res.send(result.data)
           return
         }
         // 对静态文件进行转发
-        res.redirect(server_url)
+        res.redirect(static_url)
       }
     } catch (err) {
       if (err.code !== 'ERR_BAD_REQUEST') {

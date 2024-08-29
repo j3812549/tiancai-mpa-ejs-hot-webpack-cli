@@ -43,8 +43,8 @@ class ResolveEjsPlugin {
 
         template = template.replace(/{{/g, '<%=').replace(/}}/g, '%>').replace(/\[\[/g, '<%').replace(/\]\]/g, '%>')
         if (pages.indexOf(v) > -1) {
-          const cssPath = assetsPublicPath + cssFiles.find(f => f.indexOf(v) > -1)
-          const jsPath = assetsPublicPath + jsFiles.find(f => f.indexOf(v) > -1)
+          const cssPath = assetsPublicPath + cssFiles.find(f => f.replace(/css\//, '').split('.')[0] == v)
+          const jsPath = assetsPublicPath + jsFiles.find(f => f.replace(/js\//, '').split('.')[0] == v)
           const cssTemp = `<link href="${cssPath}" rel="stylesheet" />`
           const jsTemp = `<script src="${jsPath}"></script>`
           if (template.match(/<\/head>/)) {
